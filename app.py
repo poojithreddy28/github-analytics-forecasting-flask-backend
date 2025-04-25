@@ -133,12 +133,14 @@ def github():
     # Daily Created Issues
    # Daily Created Issues: just count issue_number per created_at date
     df_created_at = (
-        df
-        .groupby('created_at', as_index=False)['issue_number']
+            df
+            .groupby('created_at', as_index=False)['issue_number']
         .count()
-    )
-    df_created_at.columns = ['date', 'count']
-
+            .rename(columns={
+            'created_at': 'date',
+                'issue_number': 'count'
+        })
+        )
     '''
     Monthly Created Issues
     Format the data by grouping the data by month
