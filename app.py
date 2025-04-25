@@ -129,13 +129,15 @@ def github():
             issues_reponse.append(data)
 
         today = last_month
-
     df = pd.DataFrame(issues_reponse)
-
     # Daily Created Issues
-    df_created_at = df.groupby(['created_at'], as_index=False).count()
-    dataFrameCreated = df_created_at[['created_at', 'issue_number']]
-    dataFrameCreated.columns = ['date', 'count']
+   # Daily Created Issues: just count issue_number per created_at date
+    df_created_at = (
+        df
+        .groupby('created_at', as_index=False)['issue_number']
+        .count()
+    )
+    df_created_at.columns = ['date', 'count']
 
     '''
     Monthly Created Issues
